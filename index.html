@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <label for="name">Meno</label>
+        <input type="text" name="name" id="name">
+
+        <label for="surname">Priezvisko</label>
+        <input type="text" name="surname" id="surname">
+
+        <fieldset>
+            <legend>Pohlavie</legend>
+
+            <input type="radio" name="gender" id="gender-man" value="man">
+            <label for="gender-man">Muž</label><br>
+
+            <input type="radio" name="gender" id="gender-woman" value="woman">
+            <label for="gender-woman">Žena</label><br>
+
+            <input type="radio" name="gender" id="gender-other">
+            <label for="gender-other">Iné</label>
+        </fieldset>
+
+        <label for="birthday">Dátum narodenia</label>
+        <input type="date" name="birthday" id="birthday">
+
+        <label for="age">Vek</label>
+        <input type="number" name="age" id="age"><br>
+        
+        <fieldset>
+            <legend>Voľba aktivity</legend>
+
+            <label for="activity">Aktivita</label>
+            <select name="activity" id="activity">
+                <option value="">--Zvoľ si typ aktivity--</option>
+            </select>
+
+            <label for="day">Deň</label>
+            <select name="day" id="day">
+                <option value="">--Zvoľ si deň--</option>
+            </select>
+
+            <label for="time">Čas</label>
+            <select name="time" id="time">
+                <option value="">--Zvoľ si čas--</option>
+            </select>
+        </fieldset>
+    </form>
+</body>
+</html>
