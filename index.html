@@ -8,49 +8,61 @@
 </head>
 <body>
     <form action="">
-        <label for="name">Meno</label>
-        <input type="text" name="name" id="name">
+        <section>
+            <h2>Osobné údaje</h2>
+            <label for="name">Meno</label>
+            <input type="text" name="name" id="name" required>
 
-        <label for="surname">Priezvisko</label>
-        <input type="text" name="surname" id="surname">
+            <label for="surname">Priezvisko</label>
+            <input type="text" name="surname" id="surname" required>
 
-        <fieldset>
-            <legend>Pohlavie</legend>
+            <fieldset>
+                <legend>Pohlavie</legend>
 
-            <input type="radio" name="gender" id="gender-man" value="man">
-            <label for="gender-man">Muž</label><br>
+                <input type="radio" name="gender" id="gender-man" value="man" checked required>
+                <label for="gender-man">Muž</label><br>
 
-            <input type="radio" name="gender" id="gender-woman" value="woman">
-            <label for="gender-woman">Žena</label><br>
+                <input type="radio" name="gender" id="gender-woman" value="woman">
+                <label for="gender-woman">Žena</label><br>
 
-            <input type="radio" name="gender" id="gender-other">
-            <label for="gender-other">Iné</label>
-        </fieldset>
+                <input type="radio" name="gender" id="gender-other">
+                <label for="gender-other">Iné</label>
+            </fieldset>
 
-        <label for="birthday">Dátum narodenia</label>
-        <input type="date" name="birthday" id="birthday">
+            <label for="birthday">Dátum narodenia</label>
+            <input type="date" name="birthday" id="birthday" required>
 
-        <label for="age">Vek</label>
-        <input type="number" name="age" id="age"><br>
+            <label for="age">Vek</label>
+            <input type="number" name="age" id="age" required><br>
+
+            <label for="email">Emailová adresa</label>
+            <input type="email" name="email" id="email"><br>
+
+            <label for="tel">Telefónne číslo v medzinárodnom formáte</label>
+            <input type="tel" name="tel" id="tel">
+        </section>
         
-        <fieldset>
-            <legend>Voľba aktivity</legend>
-
-            <label for="activity">Aktivita</label>
-            <select name="activity" id="activity">
-                <option value="">--Zvoľ si typ aktivity--</option>
-            </select>
-
-            <label for="day">Deň</label>
-            <select name="day" id="day">
-                <option value="">--Zvoľ si deň--</option>
-            </select>
-
-            <label for="time">Čas</label>
-            <select name="time" id="time">
-                <option value="">--Zvoľ si čas--</option>
-            </select>
-        </fieldset>
+        <section>
+            <h2>Detaily objednávky</h2>
+            <fieldset>
+                <legend>Voľba aktivity</legend>
+    
+                <label for="activity">Aktivita</label>
+                <select name="activity" id="activity">
+                    <option value="">--Zvoľ si typ aktivity--</option>
+                </select>
+    
+                <label for="day">Deň</label>
+                <select name="day" id="day">
+                    <option value="">--Zvoľ si deň--</option>
+                </select>
+    
+                <label for="time">Čas</label>
+                <select name="time" id="time">
+                    <option value="">--Zvoľ si čas--</option>
+                </select>
+            </fieldset>
+        </section>
     </form>
     <script src="js/index.js" defer></script>
 </body>

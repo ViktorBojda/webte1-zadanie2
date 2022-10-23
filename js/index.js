@@ -34,16 +34,64 @@ function updateActivityOptions() {
 
     daySelect.onchange = function() {
         timeSelect.length = 1;
-        
+
         for (const time of activityOptions[activitySelect.value][this.value])
             timeSelect.options[timeSelect.length] = new Option(time, time);
     }
+}
+
+function validateAge() {
+    let birthdayElm = document.getElementById("birthday");
+    let ageElm = document.getElementById("age");
+
+    let today = new Date();
+    let birthDate = new Date(birthdayElm.value);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    if (ageElm.value == 0 || age != ageElm.value) {
+        birthdayElm.style.backgroundColor = "red";
+        ageElm.style.backgroundColor = "red";
+    }
+    else {
+        birthdayElm.style.backgroundColor = "green";
+        ageElm.style.backgroundColor = "green";
+    }
+}
+
+function validateEmail() {
+    let emailElm = document.getElementById("email");
+    let validRegex = /^[^\s@]{3,}@[^\s@]+\.[^\s@]{2,4}$/;
+
+    if (emailElm.value.match(validRegex)) 
+        emailElm.style.backgroundColor = "green";
+    else
+        emailElm.style.backgroundColor = "red";
+}
+
+function validateTel() {
+    let telElm = document.getElementById("tel");
+    let validRegex = /^\+[1-9]\d{1,14}$/;
+
+    telElm.value = telElm.value.replace(/ /g, "");
+
+    if (telElm.value.match(validRegex))
+        telElm.style.backgroundColor = "green";
+    else
+        telElm.style.backgroundColor = "red";
 }
 
 document.addEventListener("DOMContentLoaded", function() {
     updateActivityOptions();
 });
 
-document.getElementById("birthday").addEventListener("input", function() {
-    alert("Test");
-});
+document.getElementById("birthday").addEventListener("focusout", validateAge);
+document.getElementById("age").addEventListener("focusout", validateAge);
+
+document.getElementById("email").addEventListener("focusout", validateEmail);
+
+document.getElementById("tel").addEventListener("focusout", validateTel);
+
