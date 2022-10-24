@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Objednávka jedla</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <form action="">
+    <header class="page-content">
+        <h1>Sieť reštaurácií Bojda</h1>
+    </header>
+    <form action="" class="page-content">
         <section>
             <h2>Osobné údaje</h2>
             <label for="name">Meno</label>
@@ -25,8 +29,9 @@
                 <input type="radio" name="gender" id="gender-woman" value="woman">
                 <label for="gender-woman">Žena</label><br>
 
-                <input type="radio" name="gender" id="gender-other">
-                <label for="gender-other">Iné</label>
+                <input type="radio" name="gender" id="gender-other-radio">
+                <label for="gender-other-radio">Iné</label>
+                <input type="text" name="gender-other-text" id="gender-other-text">
             </fieldset>
 
             <label for="birthday">Dátum narodenia</label>
@@ -45,25 +50,68 @@
         <section>
             <h2>Detaily objednávky</h2>
             <fieldset>
-                <legend>Voľba aktivity</legend>
+                <legend>Výber jedla</legend>
     
-                <label for="activity">Aktivita</label>
-                <select name="activity" id="activity">
-                    <option value="">--Zvoľ si typ aktivity--</option>
+                <label for="branch">Pobočka</label>
+                <select name="branch" id="branch">
+                    <option value="">--Zvoľ si pobočku--</option>
                 </select>
     
-                <label for="day">Deň</label>
-                <select name="day" id="day">
-                    <option value="">--Zvoľ si deň--</option>
+                <label for="cuisine">Typ kuchyne</label>
+                <select name="cuisine" id="cuisine">
+                    <option value="">--Zvoľ si typ kuchyne--</option>
                 </select>
     
-                <label for="time">Čas</label>
-                <select name="time" id="time">
-                    <option value="">--Zvoľ si čas--</option>
+                <label for="food">Jedlo</label>
+                <select name="food" id="food">
+                    <option value="">--Zvoľ si jedlo--</option>
                 </select>
+            </fieldset>
+            <fieldset>
+                <legend>Potravinové alergie</legend>
+
+                <input type="checkbox" name="milk" id="milk">
+                <label for="milk">Mlieko</label><br>
+
+                <input type="checkbox" name="egg" id="egg">
+                <label for="egg">Vajcia</label><br>
+
+                <input type="checkbox" name="fish" id="fish">
+                <label for="fish">Ryby</label><br>
+
+                <input type="checkbox" name="soy" id="soy">
+                <label for="soy">Sója</label><br>
+
+                <input type="checkbox" name="allergy-other" id="allergy-other-checkbox">
+                <label for="allergy-other-checkbox">Iné</label>
+                <input type="text" name="allergy-other-text" id="allergy-other-text">
+            </fieldset>
+        </section>
+
+        <section>
+            <h2>Spôsob vyzdvihnutia a platby</h2>
+
+            <fieldset>
+                <legend>Zvoľte si spôsob vyzdvihnutia</legend>
+
+                <input type="radio" name="transport" id="transport-in-person" checked required>
+                <label for="transport-in-person">Osobne</label><br>
+
+                <input type="radio" name="transport" id="transport-delivery">
+                <label for="transport-delivery">Donáška</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Zvoľte si spôsob platby</legend>
+
+                <input type="radio" name="payment" id="payment-cash" checked required>
+                <label for="payment-cash">Hotovosť</label><br>
+
+                <input type="radio" name="payment" id="payment-card">
+                <label for="payment-card">Platba kartou</label>
             </fieldset>
         </section>
     </form>
-    <script src="js/index.js" defer></script>
+    <script defer src="js/index.js"></script>
 </body>
 </html>

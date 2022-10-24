@@ -1,42 +1,40 @@
-let activityOptions = {
-    "Posilňovňa": {
-        "Pondelok": ["08:00", "12:30", "16:00"],
-        "Streda": ["09:00", "12:30", "14:30", "17:30"],
-        "Piatok": ["08:30", "11:00"]
+let foodOptions = {
+    "Pobočka A": {
+        "Indická": ["Cibuľové bhaji", "Indické kurča", "Indický dhal z červenej šošovice"],
+        "Japonská": ["Hubové teriyaki", "Wakame šalát", "Sushu maki s ovocím", "Udon rezance"],
+        "Čínska": ["Čínske rezance", "Bravčová pečeň čchao", "Kung pao kuracie prsia"],
     },
-    "Plávanie": {
-        "Pondelok": ["06:00", "19:00"],
-        "Utorok": ["06:30", "17:30"],
-        "Štvrtok": ["06:00"],
-        "Piatok": ["06:30", "13:00", "18:30"]
+    "Pobočka B": {
+        "Talianská": ["Margarita pizza", "Talianska frittata", "Cestoviny s mozzarellou"],
+        "Grécka": ["Paradojkové placky", "Grécke tzatziky", "Grécky šalát"],
     },
-    "Lezecká stena": {
-        "Utorok": ["11:30", "15:30", "17:00"],
-        "Štvrtok": ["07:00", "19:30"]
+    "Pobočka C": {
+        "Francúzska": ["Zaúdené ratatouille", "Hovädzie po burgundsky", "Clafoutis s čučoriadkami"],
+        "Španielska": ["Escalivada s hnedou ryžou", "Paella s morskými plodmi", "Ajo Blanco"]
     }
 }
 
-function updateActivityOptions() {
-    let activitySelect = document.getElementById("activity");
-    let daySelect = document.getElementById("day");
-    let timeSelect = document.getElementById("time");
+function updateFoodOptions() {
+    let branchSelect = document.getElementById("branch");
+    let cuisineSelect = document.getElementById("cuisine");
+    let foodSelect = document.getElementById("food");
     
-    for (const activity in activityOptions)
-        activitySelect.options[activitySelect.length] = new Option(activity, activity);
+    for (const branch in foodOptions)
+        branchSelect.options[branchSelect.length] = new Option(branch, branch);
 
-    activitySelect.onchange = function() {
-        daySelect.length = 1;
-        timeSelect.length = 1;
+    branchSelect.onchange = function() {
+        cuisineSelect.length = 1;
+        foodSelect.length = 1;
 
-        for (const day in activityOptions[this.value])
-            daySelect.options[daySelect.length] = new Option(day, day);
+        for (const cuisine in foodOptions[this.value])
+            cuisineSelect.options[cuisineSelect.length] = new Option(cuisine, cuisine);
     }
 
-    daySelect.onchange = function() {
-        timeSelect.length = 1;
+    cuisineSelect.onchange = function() {
+        foodSelect.length = 1;
 
-        for (const time of activityOptions[activitySelect.value][this.value])
-            timeSelect.options[timeSelect.length] = new Option(time, time);
+        for (const food of foodOptions[branchSelect.value][this.value])
+            foodSelect.options[foodSelect.length] = new Option(food, food);
     }
 }
 
@@ -84,8 +82,28 @@ function validateTel() {
         telElm.style.backgroundColor = "red";
 }
 
+function toggleHiddenInput() {
+    let genderOtherRadio = document.getElementById("gender-other-radio");
+    let allergyOtherCheckbox = document.getElementById("allergy-other-checkbox");
+    
+    if (genderOtherRadio.checked)
+        document.getElementById("gender-other-text").style.display = "inline";
+    else
+        document.getElementById("gender-other-text").style.display = "none";
+    
+    if (allergyOtherCheckbox.checked)
+        document.getElementById("allergy-other-text").style.display = "inline";
+    else
+        document.getElementById("allergy-other-text").style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-    updateActivityOptions();
+    updateFoodOptions();
+});
+
+const genderRadioButtons = document.querySelectorAll("input[name='gender']");
+genderRadioButtons.forEach(radio => {
+    radio.addEventListener("click", toggleHiddenInput);
 });
 
 document.getElementById("birthday").addEventListener("focusout", validateAge);
@@ -95,3 +113,4 @@ document.getElementById("email").addEventListener("focusout", validateEmail);
 
 document.getElementById("tel").addEventListener("focusout", validateTel);
 
+document.getElementById("allergy-other-checkbox").addEventListener("click", toggleHiddenInput);
