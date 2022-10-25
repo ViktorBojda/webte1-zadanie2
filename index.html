@@ -11,106 +11,156 @@
     <header class="page-content">
         <h1>Sieť reštaurácií Bojda</h1>
     </header>
-    <form action="" class="page-content">
-        <section>
-            <h2>Osobné údaje</h2>
-            <label for="name">Meno</label>
-            <input type="text" name="name" id="name" required>
+    <form action="" class="page-content grid-double-column">
+        <div class="column-left">
+            <section>
+                <h2>Osobné údaje</h2>
+                <div class="flex">
+                    <div class="flex-fill">
+                        <label for="name">Meno</label><br>
+                        <input class="input-width" type="text" name="name" id="name" placeholder="Jožko" required>
+                    </div>
+                    <div class="flex-fill">
+                        <label for="surname">Priezvisko</label><br>
+                        <input class="input-width" type="text" name="surname" id="surname" placeholder="Mrkvička" required>
+                    </div>
+                </div>
 
-            <label for="surname">Priezvisko</label>
-            <input type="text" name="surname" id="surname" required>
+                <fieldset>
+                    <legend>Pohlavie</legend>
 
-            <fieldset>
-                <legend>Pohlavie</legend>
+                    <input type="radio" name="gender" id="gender-man" value="man" checked required>
+                    <label for="gender-man">Muž</label><br>
 
-                <input type="radio" name="gender" id="gender-man" value="man" checked required>
-                <label for="gender-man">Muž</label><br>
+                    <input type="radio" name="gender" id="gender-woman" value="woman">
+                    <label for="gender-woman">Žena</label><br>
 
-                <input type="radio" name="gender" id="gender-woman" value="woman">
-                <label for="gender-woman">Žena</label><br>
+                    <input type="radio" name="gender" id="gender-other-radio">
+                    <label for="gender-other-radio">Iné</label>
+                    <input type="text" name="gender-other-text" id="gender-other-text">
+                </fieldset>
 
-                <input type="radio" name="gender" id="gender-other-radio">
-                <label for="gender-other-radio">Iné</label>
-                <input type="text" name="gender-other-text" id="gender-other-text">
-            </fieldset>
+                <div class="flex">
+                    <div class="flex-fill">
+                        <label for="birthday">Dátum narodenia</label><br>
+                        <input class="input-width" type="date" name="birthday" id="birthday" required>
+                    </div>
+                    <div class="flex-fill">
+                        <label for="age">Vek</label><br>
+                        <input class="input-width" type="number" name="age" id="age" required>
+                    </div>
+                </div>
 
-            <label for="birthday">Dátum narodenia</label>
-            <input type="date" name="birthday" id="birthday" required>
+                <div class="flex">
+                    <div class="flex-fill">
+                        <label for="email">Emailová adresa</label><br>
+                        <input class="input-width" type="email" name="email" id="email" placeholder="jozko.mrkvicka@email.com">
+                    </div>
+                    <div class="flex-fill">
+                        <label for="tel">Telefónne číslo</label><br>
+                        <input class="input-width" type="tel" name="tel" id="tel" placeholder="+123456789">
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Detaily objednávky</h2>
+                <fieldset>
+                    <legend>Výber jedla</legend>
+                    
+                    <div class="flex">
+                        <div class="flex-fill">
+                            <label for="branch">Pobočka</label><br>
+                            <select class="input-width" name="branch" id="branch">
+                                <option value="">-- Zvoľ si pobočku --</option>
+                            </select>
+                        </div>
+                        <div class="flex-fill">
+                            <label for="cuisine">Typ kuchyne</label><br>
+                            <select class="input-width" name="cuisine" id="cuisine">
+                                <option value="">-- Zvoľ si typ kuchyne --</option>
+                            </select>
+                        </div>
+                        <div class="flex-fill">
+                            <label for="food">Jedlo</label><br>
+                            <select class="input-width" name="food" id="food">
+                                <option value="">-- Zvoľ si jedlo --</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Potravinové alergie</legend>
 
-            <label for="age">Vek</label>
-            <input type="number" name="age" id="age" required><br>
+                    <input type="checkbox" name="milk" id="milk">
+                    <label for="milk">Mlieko</label><br>
 
-            <label for="email">Emailová adresa</label>
-            <input type="email" name="email" id="email"><br>
+                    <input type="checkbox" name="egg" id="egg">
+                    <label for="egg">Vajcia</label><br>
 
-            <label for="tel">Telefónne číslo v medzinárodnom formáte</label>
-            <input type="tel" name="tel" id="tel">
-        </section>
-        
-        <section>
-            <h2>Detaily objednávky</h2>
-            <fieldset>
-                <legend>Výber jedla</legend>
-    
-                <label for="branch">Pobočka</label>
-                <select name="branch" id="branch">
-                    <option value="">--Zvoľ si pobočku--</option>
-                </select>
-    
-                <label for="cuisine">Typ kuchyne</label>
-                <select name="cuisine" id="cuisine">
-                    <option value="">--Zvoľ si typ kuchyne--</option>
-                </select>
-    
-                <label for="food">Jedlo</label>
-                <select name="food" id="food">
-                    <option value="">--Zvoľ si jedlo--</option>
-                </select>
-            </fieldset>
-            <fieldset>
-                <legend>Potravinové alergie</legend>
+                    <input type="checkbox" name="fish" id="fish">
+                    <label for="fish">Ryby</label><br>
 
-                <input type="checkbox" name="milk" id="milk">
-                <label for="milk">Mlieko</label><br>
+                    <input type="checkbox" name="soy" id="soy">
+                    <label for="soy">Sója</label><br>
 
-                <input type="checkbox" name="egg" id="egg">
-                <label for="egg">Vajcia</label><br>
+                    <input type="checkbox" name="allergy-other" id="allergy-other-checkbox">
+                    <label for="allergy-other-checkbox">Iné</label>
+                    <input type="text" name="allergy-other-text" id="allergy-other-text">
+                </fieldset>
+            </section>
+        </div>
+        <div>
+            <section>
+                <h2>Spôsob vyzdvihnutia a platby</h2>
 
-                <input type="checkbox" name="fish" id="fish">
-                <label for="fish">Ryby</label><br>
+                <fieldset>
+                    <legend>Zvoľte si spôsob vyzdvihnutia</legend>
 
-                <input type="checkbox" name="soy" id="soy">
-                <label for="soy">Sója</label><br>
+                    <input type="radio" name="pickup" id="pickup-in-person" checked required>
+                    <label for="pickup-in-person">Osobne</label><br>
 
-                <input type="checkbox" name="allergy-other" id="allergy-other-checkbox">
-                <label for="allergy-other-checkbox">Iné</label>
-                <input type="text" name="allergy-other-text" id="allergy-other-text">
-            </fieldset>
-        </section>
+                    <input type="radio" name="pickup" id="pickup-delivery">
+                    <label for="pickup-delivery">Donáška</label>
+                </fieldset>
+                
+                <section id="delivery-section" class="hidden">
+                    <h3>Dodacia adresa</h3>
 
-        <section>
-            <h2>Spôsob vyzdvihnutia a platby</h2>
+                    <label for="delivery-address">Ulica</label>
+                    <input type="text" name="delivery-address" id="delivery-address"><br>
 
-            <fieldset>
-                <legend>Zvoľte si spôsob vyzdvihnutia</legend>
+                    <label for="delivery-city">Mesto</label>
+                    <input type="text" name="delivery-city" id="delivery-city"><br>
 
-                <input type="radio" name="transport" id="transport-in-person" checked required>
-                <label for="transport-in-person">Osobne</label><br>
+                    <label for="delivery-postal">PSČ</label>
+                    <input type="text" name="delivery-postal" id="delivery-postal">
+                </section>
 
-                <input type="radio" name="transport" id="transport-delivery">
-                <label for="transport-delivery">Donáška</label>
-            </fieldset>
+                <fieldset>
+                    <legend>Zvoľte si spôsob platby</legend>
 
-            <fieldset>
-                <legend>Zvoľte si spôsob platby</legend>
+                    <input type="radio" name="payment" id="payment-cash" checked required>
+                    <label for="payment-cash">Hotovosť</label><br>
 
-                <input type="radio" name="payment" id="payment-cash" checked required>
-                <label for="payment-cash">Hotovosť</label><br>
+                    <input type="radio" name="payment" id="payment-card">
+                    <label for="payment-card">Platba kartou</label>
+                </fieldset>
 
-                <input type="radio" name="payment" id="payment-card">
-                <label for="payment-card">Platba kartou</label>
-            </fieldset>
-        </section>
+                <section id="card-section" class="hidden">
+                    <h3>Informácie o karte</h3>
+
+                    <label for="card-number">Číslo karty</label>
+                    <input type="text" name="card-number" id="card-number"><br>
+
+                    <label for="card-expiration">Dátum expirácie</label>
+                    <input type="text" name="card-expiration" id="card-expiration">
+
+                    <label for="card-security">CVV</label>
+                    <input type="text" name="card-security" id="card-security">
+                </section>
+            </section>
+        </div>
     </form>
     <script defer src="js/index.js"></script>
 </body>

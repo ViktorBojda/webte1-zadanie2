@@ -12,6 +12,24 @@ body {
     font-family: 'robotoregular', Arial, Helvetica, sans-serif;
 }
 
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 2%;
+}
+
+select {
+    text-align: center;
+}
+
+fieldset {
+    border: 0;
+    margin: 0 0 1% 0;
+    padding: 0;
+}
+
 .page-content {
     max-width: 1280px;
     margin: auto;
@@ -20,6 +38,47 @@ body {
     box-shadow: 10px 5px 5px gray;
 }
 
-#gender-other-text, #allergy-other-text {
-    display: none;
+.grid-double-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
+
+.column-left {
+    margin: 0 0 2% 2%;
+}
+
+.hidden {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 2s cubic-bezier(0, 1, 0, 1);
+}
+
+.hidden.active {
+    max-height: 100vh;
+    transition: max-height 2s ease-in-out;
+}
+
+.flex {
+    width: 100%;
+    margin-bottom: 1%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.flex-fill {
+    flex: 1;
+}
+
+.input-width {
+    width: 94%;
+}
+
+.inline {
+    display: inline-block;
+}
+
+#gender-other-text, #allergy-other-text {
+    visibility: hidden;
+}
+

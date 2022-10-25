@@ -1,6 +1,6 @@
 let foodOptions = {
     "Pobočka A": {
-        "Indická": ["Cibuľové bhaji", "Indické kurča", "Indický dhal z červenej šošovice"],
+        "Indická": ["Cibuľové bhaji", "Indické kurča", "Indický dhal"],
         "Japonská": ["Hubové teriyaki", "Wakame šalát", "Sushu maki s ovocím", "Udon rezance"],
         "Čínska": ["Čínske rezance", "Bravčová pečeň čchao", "Kung pao kuracie prsia"],
     },
@@ -46,9 +46,9 @@ function validateAge() {
     let birthDate = new Date(birthdayElm.value);
     let age = today.getFullYear() - birthDate.getFullYear();
     let m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
         age--;
-    }
 
     if (ageElm.value == 0 || age != ageElm.value) {
         birthdayElm.style.backgroundColor = "red";
@@ -82,19 +82,29 @@ function validateTel() {
         telElm.style.backgroundColor = "red";
 }
 
-function toggleHiddenInput() {
+function toggleHiddenTextInput() {
     let genderOtherRadio = document.getElementById("gender-other-radio");
     let allergyOtherCheckbox = document.getElementById("allergy-other-checkbox");
     
     if (genderOtherRadio.checked)
-        document.getElementById("gender-other-text").style.display = "inline";
+        document.getElementById("gender-other-text").style.visibility = "visible";
     else
-        document.getElementById("gender-other-text").style.display = "none";
+        document.getElementById("gender-other-text").style.visibility = "hidden";
     
     if (allergyOtherCheckbox.checked)
-        document.getElementById("allergy-other-text").style.display = "inline";
+        document.getElementById("allergy-other-text").style.visibility = "visible";
     else
-        document.getElementById("allergy-other-text").style.display = "none";
+        document.getElementById("allergy-other-text").style.visibility = "hidden";
+}
+
+function toggleHiddenActiveSection(toggleId, sectionId) {
+    let toggleElm = document.getElementById(toggleId);
+    let sectionElm = document.getElementById(sectionId);
+
+    if (toggleElm.checked)
+        sectionElm.classList.add("active");
+    else
+        sectionElm.classList.remove("active");
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -103,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const genderRadioButtons = document.querySelectorAll("input[name='gender']");
 genderRadioButtons.forEach(radio => {
-    radio.addEventListener("click", toggleHiddenInput);
+    radio.addEventListener("click", toggleHiddenTextInput);
 });
 
 document.getElementById("birthday").addEventListener("focusout", validateAge);
@@ -113,4 +123,18 @@ document.getElementById("email").addEventListener("focusout", validateEmail);
 
 document.getElementById("tel").addEventListener("focusout", validateTel);
 
-document.getElementById("allergy-other-checkbox").addEventListener("click", toggleHiddenInput);
+document.getElementById("allergy-other-checkbox").addEventListener("click", toggleHiddenTextInput);
+
+const pickupRadioButtons = document.querySelectorAll("input[name='pickup']");
+pickupRadioButtons.forEach(radio => {
+    radio.addEventListener("click", function() {
+        toggleHiddenActiveSection("pickup-delivery", "delivery-section");
+    }
+)});
+
+const paymentRadioButtons = document.querySelectorAll("input[name='payment']");
+paymentRadioButtons.forEach(radio => {
+    radio.addEventListener("click", function() {
+        toggleHiddenActiveSection("payment-card", "card-section");
+    }
+)});
