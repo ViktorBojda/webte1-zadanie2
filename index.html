@@ -146,16 +146,19 @@
                     <div class="margin-bottom">
                         <label for="delivery-address">Ulica, p.č.</label><br>
                         <input class="single-input-width" type="text" name="delivery-address" id="delivery-address" placeholder="Mrkvičkova, 666">
+                        <label for="delivery-address" class="error" id="delivery-address-error"></label>
                     </div>
 
                     <div class="flex">
                         <div class="flex-fill">
                             <label for="delivery-city">Mesto</label><br>
                             <input class="double-input-width" type="text" name="delivery-city" id="delivery-city" placeholder="Mrkvičkovo">
+                            <label for="delivery-city" class="error" id="delivery-city-error"></label>
                         </div>
                         <div class="flex-fill">
                             <label for="delivery-postal">PSČ</label><br>
-                            <input class="double-input-width" type="text" name="delivery-postal" id="delivery-postal" placeholder="420 69">
+                            <input class="double-input-width" type="tel" name="delivery-postal" id="delivery-postal" placeholder="420 69">
+                            <label for="delivery-postal" class="error" id="delivery-postal-error"></label>
                         </div>
                     </div>
                 </section>

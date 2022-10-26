@@ -58,7 +58,6 @@ function validateButton() {
     for (const elmId in requiredElements) {
         if (requiredElements[elmId] == false) {
             button.disabled = true;
-            console.log("here");
             return;
         }
     }
@@ -235,6 +234,7 @@ function toggleHiddenActiveSection(toggleId, sectionId) {
 
     if (toggleElm.checked)
         sectionElm.classList.add("active");
+
     else
         sectionElm.classList.remove("active");
 }
@@ -242,7 +242,7 @@ function toggleHiddenActiveSection(toggleId, sectionId) {
 
 function highlightRequired(reqElm) {
     let error = document.getElementById(reqElm.id + "-error");
-    console.log(reqElm);
+
     if (reqElm.value === "") {
         reqElm.style.borderColor = "red";
         reqElm.style.backgroundColor = "rgb(234, 118, 118)";
@@ -347,6 +347,64 @@ function showHiddenTextField() {
     let hiddenTextField = document.getElementById("hidden-text-field");
     hiddenTextField.style.visibility = "visible";
 
+}
+
+function requireDelivery(bool) {
+    let deliveryAddress = document.getElementById("delivery-address");
+    let deliveryCity = document.getElementById("delivery-city");
+    let deliveryPostal = document.getElementById("delivery-postal");
+
+    if (bool) {
+        deliveryAddress.required = true;
+        deliveryAddress.addEventListener("input", function() {
+            highlightRequired(deliveryAddress);
+        });
+        requiredElements[deliveryAddress.id] = false;
+        highlightRequired(deliveryAddress);
+
+        deliveryCity.required = true;
+        deliveryCity.addEventListener("input", function() {
+            highlightRequired(deliveryCity);
+        });
+        requiredElements[deliveryCity.id] = false;
+        highlightRequired(deliveryCity);
+
+        deliveryPostal.required = true;
+        deliveryPostal.addEventListener("input", function() {
+            highlightRequired(deliveryPostal);
+        });
+        requiredElements[deliveryPostal.id] = false;
+        highlightRequired(deliveryPostal);
+    }
+    else {
+        deliveryAddress.required = false;
+        deliveryAddress.removeEventListener("input", highlightRequired);
+        delete requiredElements[deliveryAddress.id];
+
+        deliveryCity.required = false;
+        deliveryCity.removeEventListener("input", highlightRequired);
+        delete requiredElements[deliveryCity.id];
+
+        deliveryPostal.required = false;
+        deliveryPostal.removeEventListener("input", highlightRequired);
+        delete requiredElements[deliveryPostal.id];
+    }
+}
+
+function togglePickup() {
+    let toggle = document.getElementById("pickup-delivery");
+    let section = document.getElementById("delivery-section");
+
+    if (toggle.checked) {
+        section.classList.add("active");
+        requireDelivery(true);
+    }
+    else {
+        section.classList.remove("active");
+        requireDelivery(false);
+    }
+
+    validateButton();
 }
 
 
@@ -481,12 +539,10 @@ document.getElementById("food").addEventListener("input", highlightMissingFood);
 document.getElementById("cuisine").addEventListener("input", highlightMissingFood);
 document.getElementById("branch").addEventListener("input", highlightMissingFood);
 
-const pickupRadioButtons = document.querySelectorAll("input[name='pickup']");
-pickupRadioButtons.forEach(radio => {
-    radio.addEventListener("click", function() {
-        toggleHiddenActiveSection("pickup-delivery", "delivery-section");
-    }
-)});
+const pickupRadios = document.querySelectorAll("input[name='pickup']");
+pickupRadios.forEach(radio => {
+    radio.addEventListener("click", togglePickup);
+});
 
 const paymentRadioButtons = document.querySelectorAll("input[name='payment']");
 paymentRadioButtons.forEach(radio => {
