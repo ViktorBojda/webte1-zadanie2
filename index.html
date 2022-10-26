@@ -9,9 +9,19 @@
 </head>
 <body>
     <header class="page-content">
-        <h1>Sieť reštaurácií Bojda</h1>
+        <h1><strong>Bojda</strong></h1>
+        <h1>Sieť reštaurácií</h1>
     </header>
-    <form action="" class="page-content grid-double-column">
+    <form action="https://form2mail.hynix.sk/form2mail.php" method="post" enctype="multipart/form-data" class="page-content grid-double-column">
+        <input type="hidden" name="apikey" value="ab0b79054328d3ec0b3dd66f88d3802d">
+
+        <input type="hidden" name="from" value="xbojda@stuba.sk">
+        <input type="hidden" name="sender" value="Viktor">
+        <input type="hidden" name="to" value="viktorbojda17@gmail.com">
+        <input type="hidden" name="subject" value="Viktor">
+        <input type="hidden" name="redirectOk" value="https://webte1.fei.stuba.sk/~xbojda/webte1-zadanie2/ok.html">
+        <input type="hidden" name="redirectFalse" value="https://webte1.fei.stuba.sk/~xbojda/webte1-zadanie2/false.html">
+
         <div class="column">
             <section>
                 <h2>Osobné údaje</h2>
@@ -35,11 +45,7 @@
                     <label for="gender-man">Muž</label><br>
 
                     <input type="radio" name="gender" id="gender-woman" value="Žena">
-                    <label for="gender-woman">Žena</label><br>
-
-                    <input type="radio" name="gender" id="gender-other-radio">
-                    <label for="gender-other-radio">Iné</label>
-                    <input type="text" name="gender-other-text" id="gender-other-text">
+                    <label for="gender-woman">Žena</label>
                 </fieldset>
 
                 <div class="flex">
@@ -50,7 +56,7 @@
                     </div>
                     <div class="flex-fill">
                         <label for="age">Vek</label><br>
-                        <input class="double-input-width" type="number" name="age" id="age" required>
+                        <input class="double-input-width" type="number" name="age" id="age" placeholder="69" required>
                         <label for="age" class="error" id="age-error"></label>
                     </div>
                 </div>
@@ -139,17 +145,17 @@
 
                     <div class="margin-bottom">
                         <label for="delivery-address">Ulica, p.č.</label><br>
-                        <input class="single-input-width" type="text" name="delivery-address" id="delivery-address">
+                        <input class="single-input-width" type="text" name="delivery-address" id="delivery-address" placeholder="Mrkvičkova, 666">
                     </div>
 
                     <div class="flex">
                         <div class="flex-fill">
                             <label for="delivery-city">Mesto</label><br>
-                            <input class="double-input-width" type="text" name="delivery-city" id="delivery-city">
+                            <input class="double-input-width" type="text" name="delivery-city" id="delivery-city" placeholder="Mrkvičkovo">
                         </div>
                         <div class="flex-fill">
                             <label for="delivery-postal">PSČ</label><br>
-                            <input class="double-input-width" type="text" name="delivery-postal" id="delivery-postal">
+                            <input class="double-input-width" type="text" name="delivery-postal" id="delivery-postal" placeholder="420 69">
                         </div>
                     </div>
                 </section>
@@ -170,26 +176,31 @@
                     <div class="flex">
                         <div class="flex-fill">
                             <label for="card-name">Meno na karte</label><br>
-                            <input class="double-input-width" type="text" name="card-name" id="card-name">
+                            <input class="double-input-width" type="text" name="card-name" id="card-name" placeholder="Jožko Mrkvička">
                         </div>
                         <div class="flex-fill">
                             <label for="card-number">Číslo karty</label><br>
-                            <input class="double-input-width" type="tel" inputmode="numeric" name="card-number" id="card-number">
+                            <input class="double-input-width" type="tel" inputmode="numeric" name="card-number" id="card-number" placeholder="XXXX XXXX XXXX XXXX">
                         </div>
                     </div>
 
                     <div class="flex">
                         <div class="flex-fill">
                             <label for="card-expiration">Dátum expirácie</label><br>
-                            <input class="double-input-width" type="text" name="card-expiration" id="card-expiration">
+                            <input class="double-input-width" type="text" name="card-expiration" id="card-expiration" placeholder="XX/XX" autocomplete="cc-exp" maxlength="5">
                         </div>
                         <div class="flex-fill">
                             <label for="card-security">CVV</label><br>
-                            <input class="double-input-width" type="number" name="card-security" id="card-security">
+                            <input class="double-input-width" type="text" name="card-security" id="card-security" placeholder="XXX" maxlength="3">
                         </div>
                     </div>
                 </section>
                 <input class="flex" disabled type="button" onclick="createModalSummary()" id="checkout-button" value="Prejsť na zhodnotenie">
+
+                <div>
+                    <input type="button" value="Veľmi tajné tlačidlo" onclick="showHiddenTextField()">
+                    <input type="text" id="hidden-text-field" value="Viktor Bojda">
+                </div>
             </section>
         </div>
         <div id="modal-summary"></div>

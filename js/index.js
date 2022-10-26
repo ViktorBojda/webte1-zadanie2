@@ -14,12 +14,17 @@ const foodOptions = {
     }
 }
 
+
 let requiredElements = {
     "name": false,
-    // "surname": false,
-    // "birthday": false,
-    // "age": false,
+    "surname": false,
+    "birthday": false,
+    "age": false,
+    "email": false,
+    "tel": false,
+    "food": false
 }
+
 
 function updateFoodOptions() {
     let branchSelect = document.getElementById("branch");
@@ -57,8 +62,10 @@ function validateButton() {
             return;
         }
     }
+
     button.disabled = false;
 }
+
 
 function validateLetterCount(elmId) {
     let elm = document.getElementById(elmId)
@@ -75,18 +82,19 @@ function validateLetterCount(elmId) {
         elm.style.backgroundColor = "rgb(234, 118, 118)";
         error.style.display = "block";
         error.textContent = "Presiahol si maximálny počet znakov."
-        requiredElements[elmId] = false;
-        validateButton();
+        requiredElements[elm.id] = false;
     }
     else {
         elm.style.backgroundColor = "rgb(121, 232, 121)";
         elm.style.borderColor = "";
         error.style.display = "none";
         error.textContent = "";
-        requiredElements[elmId] = true;
-        validateButton();
+        requiredElements[elm.id] = true;
     }
+
+    validateButton();
 }
+
 
 function getAge(birthdayId) {
     let birthdayElm = document.getElementById(birthdayId);
@@ -101,6 +109,7 @@ function getAge(birthdayId) {
     return age;
 }
 
+
 function validateBirthday() {
     let birthdayElm = document.getElementById("birthday");
     let birthdayError = document.getElementById("birthday-error");
@@ -113,13 +122,24 @@ function validateBirthday() {
         birthdayError.style.display = "block";
         birthdayElm.style.backgroundColor = "rgb(234, 118, 118)";
         birthdayError.textContent = "Pre vytvorenie objednávky musíš mať aspoň 15 rokov."
+        requiredElements[birthdayElm.id] = false;
+    }
+    else if (calcAge > 120) {
+        birthdayError.style.display = "block";
+        birthdayElm.style.backgroundColor = "rgb(234, 118, 118)";
+        birthdayError.textContent = "Zadaj platný dátum narodenia."
+        requiredElements[birthdayElm.id] = false;
     }
     else {
         birthdayError.style.display = "none";
         birthdayError.textContent = "";
         birthdayElm.style.backgroundColor = "rgb(121, 232, 121)";
+        requiredElements[birthdayElm.id] = true;
     }
+
+    validateButton();
 }
+
 
 function validateAge() {
     let ageElm = document.getElementById("age");
@@ -133,14 +153,19 @@ function validateAge() {
         ageError.style.display = "block";
         ageElm.style.backgroundColor = "rgb(234, 118, 118)";
         ageError.textContent = "Vek sa nezhoduje so zadaným dátumom narodenia."
+        requiredElements[ageElm.id] = false;
     }
     else {
         ageElm.style.backgroundColor = "rgb(121, 232, 121)";
         ageElm.style.borderColor = "";
         ageError.style.display = "none";
         ageError.textContent = "";
+        requiredElements[ageElm.id] = true;
     }
+
+    validateButton();
 }
+
 
 function validateEmail() {
     let emailElm = document.getElementById("email");
@@ -154,13 +179,18 @@ function validateEmail() {
         emailElm.style.backgroundColor = "rgb(121, 232, 121)";
         emailError.textContent = "";
         emailError.style.display = "none";
+        requiredElements[emailElm.id] = true;
     }
     else {
         emailElm.style.backgroundColor = "rgb(234, 118, 118)";
         emailError.style.display = "block";
         emailError.textContent = "Nesprávne zadaný formát."
+        requiredElements[emailElm.id] = false;
     }
+
+    validateButton();
 }
+
 
 function validateTel() {
     let telElm = document.getElementById("tel");
@@ -176,28 +206,28 @@ function validateTel() {
         telElm.style.backgroundColor = "rgb(121, 232, 121)";
         error.textContent = "";
         error.style.display = "none";
+        requiredElements[telElm.id] = true;
     }
     else {
         telElm.style.backgroundColor = "rgb(234, 118, 118)";
         error.textContent = "Nesprávne zadaný formát.";
         error.style.display = "block";
+        requiredElements[telElm.id] = false;
     }
+
+    validateButton();
 }
 
+
 function toggleHiddenTextInput() {
-    let genderOtherRadio = document.getElementById("gender-other-radio");
     let allergyOtherCheckbox = document.getElementById("allergy-other-checkbox");
-    
-    if (genderOtherRadio.checked)
-        document.getElementById("gender-other-text").style.visibility = "visible";
-    else
-        document.getElementById("gender-other-text").style.visibility = "hidden";
     
     if (allergyOtherCheckbox.checked)
         document.getElementById("allergy-other-text").style.visibility = "visible";
     else
         document.getElementById("allergy-other-text").style.visibility = "hidden";
 }
+
 
 function toggleHiddenActiveSection(toggleId, sectionId) {
     let toggleElm = document.getElementById(toggleId);
@@ -209,25 +239,27 @@ function toggleHiddenActiveSection(toggleId, sectionId) {
         sectionElm.classList.remove("active");
 }
 
+
 function highlightRequired(reqElm) {
     let error = document.getElementById(reqElm.id + "-error");
-    
+    console.log(reqElm);
     if (reqElm.value === "") {
         reqElm.style.borderColor = "red";
         reqElm.style.backgroundColor = "rgb(234, 118, 118)";
         error.textContent = "Toto pole je povinné.";
         error.style.display = "block";
-        requiredElements[reqElm] = false;
-        validateButton();
+        requiredElements[reqElm.id] = false;
     }
     else {
         reqElm.style.borderColor = "";
         reqElm.style.backgroundColor = "rgb(121, 232, 121)";
         error.style.display = "none";
-        requiredElements[reqElm] = true;
-        validateButton();
+        requiredElements[reqElm.id] = true;
     }
+
+    validateButton();
 }
+
 
 function highlightMissingFood() {
     let branchSel = document.getElementById("branch");
@@ -244,6 +276,7 @@ function highlightMissingFood() {
         foodSel.style.backgroundColor = "rgb(234, 118, 118)";
         error.textContent = "Tieto polia sú povinné.";
         error.style.display = "block";
+        requiredElements[foodSel.id] = false
     }
     else {
         branchSel.style.borderColor = "";
@@ -253,21 +286,23 @@ function highlightMissingFood() {
         foodSel.style.borderColor = "";
         foodSel.style.backgroundColor = "rgb(121, 232, 121)";
         error.style.display = "none";
+        requiredElements[foodSel.id] = true
     }
+
+    validateButton();
 }
+
 
 function getGenderValue() {
     let genderRadios = document.getElementsByName("gender");
 
     for (const gender of genderRadios) {
         if (gender.checked) {
-            if (gender.id == "gender-other-radio")
-                return document.getElementById("gender-other-text").value;
-            else
-                return gender.value;
+            return gender.value;
         }
     }
 }
+
 
 function getAllergyValues() {
     let allergyValues = "";
@@ -286,6 +321,7 @@ function getAllergyValues() {
     return allergyValues;
 }
 
+
 function getPickupChecked() {
     let pickupRadios = document.getElementsByName("pickup");
 
@@ -295,6 +331,7 @@ function getPickupChecked() {
         }
     }
 }
+
 
 function getPaymentChecked() {
     let paymentRadios = document.getElementsByName("payment");
@@ -306,54 +343,69 @@ function getPaymentChecked() {
     }
 }
 
+function showHiddenTextField() {
+    let hiddenTextField = document.getElementById("hidden-text-field");
+    hiddenTextField.style.visibility = "visible";
+
+}
+
+
 function createModalSummary() {
     let modalBackground = document.getElementById("modal-summary");
     modalBackground.classList.add("modal-background");
 
     let modalContent = document.createElement("div");
+    modalContent.id = "modal-content";
     modalContent.classList.add("modal-content");
+    modalContent.classList.add("grid-double-column");
     modalBackground.appendChild(modalContent);
 
-    let name = document.createElement("p");
-    name.textContent = "Meno: " + document.getElementById("name").value;
-    modalContent.appendChild(name);
+    let nameText = document.createElement("p");
+    nameText.textContent = "Meno: " + document.getElementById("name").value;
+    modalContent.appendChild(nameText);
 
-    let surname = document.createElement("p");
-    surname.textContent = "Priezvisko: " + document.getElementById("surname").value;
-    modalContent.appendChild(surname);
+    let surnameText = document.createElement("p");
+    surnameText.textContent = "Priezvisko: " + document.getElementById("surname").value;
+    modalContent.appendChild(surnameText);
 
-    let gender = document.createElement("p");
-    gender.textContent = "Pohlavie: " + getGenderValue();
-    modalContent.appendChild(gender);
+    let genderText = document.createElement("p");
+    genderText.textContent = "Pohlavie: " + getGenderValue();
+    modalContent.appendChild(genderText);
 
-    let birthDate = document.createElement("p");
-    birthDate.textContent = "Dátum narodenia: " + document.getElementById("birthday").value;
-    modalContent.appendChild(birthDate);
+    let birthDateText = document.createElement("p");
+    birthDateText.textContent = "Dátum narodenia: " + document.getElementById("birthday").value;
+    modalContent.appendChild(birthDateText);
 
-    let age = document.createElement("p");
-    age.textContent = "Vek: " + document.getElementById("age").value;
-    modalContent.appendChild(age);
+    let ageText = document.createElement("p");
+    ageText.textContent = "Vek: " + document.getElementById("age").value;
+    modalContent.appendChild(ageText);
 
-    let email = document.createElement("p");
-    email.textContent = "Email: " + document.getElementById("email").value;
-    modalContent.appendChild(email);
+    let emailText = document.createElement("p");
+    emailText.textContent = "Email: " + document.getElementById("email").value;
+    modalContent.appendChild(emailText);
 
-    let tel = document.createElement("p");
-    tel.textContent = "Tel.č.: " + document.getElementById("tel").value;
-    modalContent.appendChild(tel);
+    let telText = document.createElement("p");
+    telText.textContent = "Tel.č.: " + document.getElementById("tel").value;
+    modalContent.appendChild(telText);
 
-    let food = document.createElement("p");
+    let foodText = document.createElement("p");
     const foodSelect = document.getElementById("food");
-    food.textContent = "Vybrané jedlo: " + foodSelect.options[foodSelect.selectedIndex].text;
-    modalContent.appendChild(food);
+    foodText.textContent = "Vybrané jedlo: " + foodSelect.options[foodSelect.selectedIndex].text;
+    modalContent.appendChild(foodText);
 
-    let allergies = document.createElement("p");
-    allergies.textContent = "Uvedené alergie: " + getAllergyValues();
-    modalContent.appendChild(allergies);
+    let allergiesValues = getAllergyValues();
+    if (allergiesValues != "") {
+        let allergiesText = document.createElement("p");
+        allergiesText.textContent = "Uvedené alergie: " + allergiesValues;
+        modalContent.appendChild(allergiesText);
+    }
 
-    let note = document.createElement("p");
-    note.textContent = "Poznámka k objednávke: " + document.getElementById("note").value;
-    modalContent.appendChild(note);
+    let noteValue = document.getElementById("note").value;
+    if (noteValue != "") {
+        let noteText = document.createElement("p");
+        noteText.textContent = "Poznámka k objednávke: " + noteValue;
+        modalContent.appendChild(noteText);
+    }
 
     let pickup = document.createElement("p");
     pickup.textContent = "Spôsob dodania: " + getPickupChecked().value;
@@ -378,8 +430,13 @@ function createModalSummary() {
     modalContent.appendChild(payment);
 
     let price = document.createElement("p");
-    price.textContent = "Finálna suma: " + foodSelect.value;
+    price.textContent = "Finálna suma: " + foodSelect.value + " €";
     modalContent.appendChild(price);
+
+    let submitButton = document.createElement("input");
+    submitButton.type = "submit";
+    submitButton.value = "Objednať";
+    modalContent.appendChild(submitButton);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -420,9 +477,9 @@ document.getElementById("tel").addEventListener("input", validateTel);
 
 document.getElementById("allergy-other-checkbox").addEventListener("click", toggleHiddenTextInput);
 
-document.getElementById("branch").addEventListener("input", highlightMissingFood);
-document.getElementById("cuisine").addEventListener("input", highlightMissingFood);
 document.getElementById("food").addEventListener("input", highlightMissingFood);
+document.getElementById("cuisine").addEventListener("input", highlightMissingFood);
+document.getElementById("branch").addEventListener("input", highlightMissingFood);
 
 const pickupRadioButtons = document.querySelectorAll("input[name='pickup']");
 pickupRadioButtons.forEach(radio => {
@@ -437,3 +494,11 @@ paymentRadioButtons.forEach(radio => {
         toggleHiddenActiveSection("payment-card", "card-section");
     }
 )});
+
+const modalBackground = document.getElementById("modal-summary");
+window.onclick = function(event) {
+    if (event.target == modalBackground) {
+        modalBackground.classList.remove("modal-background");
+        document.getElementById("modal-content").remove();
+    }
+}
