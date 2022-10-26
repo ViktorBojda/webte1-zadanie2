@@ -17,12 +17,12 @@
                 <h2>Osobné údaje</h2>
                 <div class="flex">
                     <div class="flex-fill">
-                        <label for="name">Meno</label><br>
+                        <label for="name">Meno</label><label for="name" id="name-letter-count"> (0/20)</label><br>
                         <input class="double-input-width" type="text" name="name" id="name" placeholder="Jožko" required><br>
                         <label for="name" class="error" id="name-error"></label>
                     </div>
                     <div class="flex-fill">
-                        <label for="surname">Priezvisko</label><br>
+                        <label for="surname">Priezvisko</label><label for="surname" id="surname-letter-count"> (0/20)</label><br>
                         <input class="double-input-width" type="text" name="surname" id="surname" placeholder="Mrkvička" required>
                         <label for="surname" class="error" id="surname-error"></label>
                     </div>
@@ -31,7 +31,7 @@
                 <fieldset>
                     <legend>Pohlavie</legend>
 
-                    <input type="radio" name="gender" id="gender-man" value="Muž" checked required>
+                    <input type="radio" name="gender" id="gender-man" value="Muž" checked>
                     <label for="gender-man">Muž</label><br>
 
                     <input type="radio" name="gender" id="gender-woman" value="Žena">
@@ -58,11 +58,13 @@
                 <div class="flex">
                     <div class="flex-fill">
                         <label for="email">Emailová adresa</label><br>
-                        <input class="double-input-width" type="email" name="email" id="email" placeholder="jozko.mrkvicka@email.com">
+                        <input class="double-input-width" type="email" name="email" id="email" placeholder="jozko.mrkvicka@email.com" required>
+                        <label for="email" class="error" id="email-error"></label>
                     </div>
                     <div class="flex-fill">
                         <label for="tel">Telefónne číslo</label><br>
-                        <input class="double-input-width" type="tel" name="tel" id="tel" placeholder="+123456789">
+                        <input class="double-input-width" type="tel" name="tel" id="tel" placeholder="+123456789" required>
+                        <label for="tel" class="error" id="tel-error"></label>
                     </div>
                 </div>
             </section>
@@ -78,6 +80,7 @@
                             <select class="double-input-width" name="branch" id="branch">
                                 <option value="">-- Zvoľ si pobočku --</option>
                             </select>
+                            <label for="branch" class="error" id="food-error"></label>
                         </div>
                         <div class="flex-fill">
                             <label for="cuisine">Typ kuchyne</label><br>
@@ -124,7 +127,7 @@
                 <fieldset>
                     <legend>Zvoľte si spôsob vyzdvihnutia</legend>
 
-                    <input type="radio" name="pickup" id="pickup-in-person" value="Osobne" checked required>
+                    <input type="radio" name="pickup" id="pickup-in-person" value="Osobne" checked>
                     <label for="pickup-in-person">Osobne</label><br>
 
                     <input type="radio" name="pickup" id="pickup-delivery" value="Donáška">
@@ -154,7 +157,7 @@
                 <fieldset>
                     <legend>Zvoľte si spôsob platby</legend>
 
-                    <input type="radio" name="payment" id="payment-cash" value="Hotovosť" checked required>
+                    <input type="radio" name="payment" id="payment-cash" value="Hotovosť" checked>
                     <label for="payment-cash">Hotovosť</label><br>
 
                     <input type="radio" name="payment" id="payment-card" value="Platba kartou">
@@ -186,7 +189,7 @@
                         </div>
                     </div>
                 </section>
-                <input class="flex" type="button" onclick="createModalSummary()" value="Prejsť na zhodnotenie">
+                <input class="flex" disabled type="button" onclick="createModalSummary()" id="checkout-button" value="Prejsť na zhodnotenie">
             </section>
         </div>
         <div id="modal-summary"></div>

@@ -14,6 +14,13 @@ const foodOptions = {
     }
 }
 
+let requiredElements = {
+    "name": false,
+    // "surname": false,
+    // "birthday": false,
+    // "age": false,
+}
+
 function updateFoodOptions() {
     let branchSelect = document.getElementById("branch");
     let cuisineSelect = document.getElementById("cuisine");
@@ -40,10 +47,49 @@ function updateFoodOptions() {
     }
 }
 
-function validateAge() {
-    let birthdayElm = document.getElementById("birthday");
-    let ageElm = document.getElementById("age");
+function validateButton() {
+    button = document.getElementById("checkout-button");
 
+    for (const elmId in requiredElements) {
+        if (requiredElements[elmId] == false) {
+            button.disabled = true;
+            console.log("here");
+            return;
+        }
+    }
+    button.disabled = false;
+}
+
+function validateLetterCount(elmId) {
+    let elm = document.getElementById(elmId)
+    let error = document.getElementById(elmId + "-error");
+    let label = document.getElementById(elmId + "-letter-count");
+    let maxCount = 20;
+    let currentCount = elm.value.length;
+    label.textContent = " (" + currentCount + "/20)";
+
+    if (elm.value === "")
+        return; 
+
+    if (currentCount > maxCount) {
+        elm.style.backgroundColor = "rgb(234, 118, 118)";
+        error.style.display = "block";
+        error.textContent = "Presiahol si maximálny počet znakov."
+        requiredElements[elmId] = false;
+        validateButton();
+    }
+    else {
+        elm.style.backgroundColor = "rgb(121, 232, 121)";
+        elm.style.borderColor = "";
+        error.style.display = "none";
+        error.textContent = "";
+        requiredElements[elmId] = true;
+        validateButton();
+    }
+}
+
+function getAge(birthdayId) {
+    let birthdayElm = document.getElementById(birthdayId);
     let today = new Date();
     let birthDate = new Date(birthdayElm.value);
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -52,36 +98,90 @@ function validateAge() {
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
         age--;
 
-    if (ageElm.value == 0 || age != ageElm.value) {
-        birthdayElm.style.backgroundColor = "red";
-        ageElm.style.backgroundColor = "red";
+    return age;
+}
+
+function validateBirthday() {
+    let birthdayElm = document.getElementById("birthday");
+    let birthdayError = document.getElementById("birthday-error");
+    let calcAge = getAge("birthday");
+
+    if (birthdayElm.value == "")
+        return;
+
+    if (calcAge < 15) {
+        birthdayError.style.display = "block";
+        birthdayElm.style.backgroundColor = "rgb(234, 118, 118)";
+        birthdayError.textContent = "Pre vytvorenie objednávky musíš mať aspoň 15 rokov."
     }
     else {
-        birthdayElm.style.backgroundColor = "green";
-        ageElm.style.backgroundColor = "green";
+        birthdayError.style.display = "none";
+        birthdayError.textContent = "";
+        birthdayElm.style.backgroundColor = "rgb(121, 232, 121)";
+    }
+}
+
+function validateAge() {
+    let ageElm = document.getElementById("age");
+    let ageError = document.getElementById("age-error");
+    let calcAge = getAge("birthday");
+
+    if (ageElm.value == "")
+        return;
+
+    if (ageElm.value != calcAge) {
+        ageError.style.display = "block";
+        ageElm.style.backgroundColor = "rgb(234, 118, 118)";
+        ageError.textContent = "Vek sa nezhoduje so zadaným dátumom narodenia."
+    }
+    else {
+        ageElm.style.backgroundColor = "rgb(121, 232, 121)";
+        ageElm.style.borderColor = "";
+        ageError.style.display = "none";
+        ageError.textContent = "";
     }
 }
 
 function validateEmail() {
     let emailElm = document.getElementById("email");
+    let emailError = document.getElementById("email-error");
     let validRegex = /^[^\s@]{3,}@[^\s@]+\.[^\s@]{2,4}$/;
 
-    if (emailElm.value.match(validRegex)) 
-        emailElm.style.backgroundColor = "green";
-    else
-        emailElm.style.backgroundColor = "red";
+    if (emailElm.value == "")
+        return;
+
+    if (emailElm.value.match(validRegex)) {
+        emailElm.style.backgroundColor = "rgb(121, 232, 121)";
+        emailError.textContent = "";
+        emailError.style.display = "none";
+    }
+    else {
+        emailElm.style.backgroundColor = "rgb(234, 118, 118)";
+        emailError.style.display = "block";
+        emailError.textContent = "Nesprávne zadaný formát."
+    }
 }
 
 function validateTel() {
     let telElm = document.getElementById("tel");
+    let error = document.getElementById(telElm.id + "-error");
     let validRegex = /^\+[1-9]\d{1,14}$/;
 
     telElm.value = telElm.value.replace(/ /g, "");
 
-    if (telElm.value.match(validRegex))
-        telElm.style.backgroundColor = "green";
-    else
-        telElm.style.backgroundColor = "red";
+    if (telElm.value == "")
+        return;
+
+    if (telElm.value.match(validRegex)) {
+        telElm.style.backgroundColor = "rgb(121, 232, 121)";
+        error.textContent = "";
+        error.style.display = "none";
+    }
+    else {
+        telElm.style.backgroundColor = "rgb(234, 118, 118)";
+        error.textContent = "Nesprávne zadaný formát.";
+        error.style.display = "block";
+    }
 }
 
 function toggleHiddenTextInput() {
@@ -111,14 +211,47 @@ function toggleHiddenActiveSection(toggleId, sectionId) {
 
 function highlightRequired(reqElm) {
     let error = document.getElementById(reqElm.id + "-error");
-
+    
     if (reqElm.value === "") {
         reqElm.style.borderColor = "red";
-        error.textContent = "Toto pole je povinné."
+        reqElm.style.backgroundColor = "rgb(234, 118, 118)";
+        error.textContent = "Toto pole je povinné.";
         error.style.display = "block";
+        requiredElements[reqElm] = false;
+        validateButton();
     }
     else {
         reqElm.style.borderColor = "";
+        reqElm.style.backgroundColor = "rgb(121, 232, 121)";
+        error.style.display = "none";
+        requiredElements[reqElm] = true;
+        validateButton();
+    }
+}
+
+function highlightMissingFood() {
+    let branchSel = document.getElementById("branch");
+    let cuisineSel = document.getElementById("cuisine");
+    let foodSel = document.getElementById("food");
+    let error = document.getElementById("food-error");
+
+    if (branchSel === "" || cuisineSel === "" || foodSel.value === "") {
+        branchSel.style.borderColor = "red";
+        branchSel.style.backgroundColor = "rgb(234, 118, 118)";
+        cuisineSel.style.borderColor = "red";
+        cuisineSel.style.backgroundColor = "rgb(234, 118, 118)";
+        foodSel.style.borderColor = "red";
+        foodSel.style.backgroundColor = "rgb(234, 118, 118)";
+        error.textContent = "Tieto polia sú povinné.";
+        error.style.display = "block";
+    }
+    else {
+        branchSel.style.borderColor = "";
+        branchSel.style.backgroundColor = "rgb(121, 232, 121)";
+        cuisineSel.style.borderColor = "";
+        cuisineSel.style.backgroundColor = "rgb(121, 232, 121)";
+        foodSel.style.borderColor = "";
+        foodSel.style.backgroundColor = "rgb(121, 232, 121)";
         error.style.display = "none";
     }
 }
@@ -194,7 +327,7 @@ function createModalSummary() {
     modalContent.appendChild(gender);
 
     let birthDate = document.createElement("p");
-    gender.textContent = "Dátum narodenia: " + document.getElementById("birthday").value;
+    birthDate.textContent = "Dátum narodenia: " + document.getElementById("birthday").value;
     modalContent.appendChild(birthDate);
 
     let age = document.createElement("p");
@@ -251,14 +384,25 @@ function createModalSummary() {
 
 document.addEventListener("DOMContentLoaded", function() {
     updateFoodOptions();
+    highlightMissingFood();
 });
 
-const reqElms = document.querySelectorAll("input[required]");
-reqElms.forEach(elm => {
-    highlightRequired(elm);
-    elm.addEventListener("focusout", function() {
-        highlightRequired(elm);
+const reqInputs = document.querySelectorAll("input[required]");
+reqInputs.forEach(input => {
+    highlightRequired(input);
+    input.addEventListener("input", function() {
+        highlightRequired(input);
     });
+});
+
+let nameElm = document.getElementById("name");
+nameElm.addEventListener("input", function() {
+    validateLetterCount(nameElm.id);
+});
+
+let surnameElm = document.getElementById("surname");
+surnameElm.addEventListener("input", function() {
+    validateLetterCount(surnameElm.id);
 });
 
 const genderRadioButtons = document.querySelectorAll("input[name='gender']");
@@ -266,14 +410,19 @@ genderRadioButtons.forEach(radio => {
     radio.addEventListener("click", toggleHiddenTextInput);
 });
 
-document.getElementById("birthday").addEventListener("focusout", validateAge);
-document.getElementById("age").addEventListener("focusout", validateAge);
+document.getElementById("birthday").addEventListener("input", validateBirthday);
 
-document.getElementById("email").addEventListener("focusout", validateEmail);
+document.getElementById("age").addEventListener("input", validateAge);
 
-document.getElementById("tel").addEventListener("focusout", validateTel);
+document.getElementById("email").addEventListener("input", validateEmail);
+
+document.getElementById("tel").addEventListener("input", validateTel);
 
 document.getElementById("allergy-other-checkbox").addEventListener("click", toggleHiddenTextInput);
+
+document.getElementById("branch").addEventListener("input", highlightMissingFood);
+document.getElementById("cuisine").addEventListener("input", highlightMissingFood);
+document.getElementById("food").addEventListener("input", highlightMissingFood);
 
 const pickupRadioButtons = document.querySelectorAll("input[name='pickup']");
 pickupRadioButtons.forEach(radio => {
