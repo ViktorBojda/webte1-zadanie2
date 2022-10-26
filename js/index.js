@@ -1,16 +1,16 @@
-let foodOptions = {
+const foodOptions = {
     "Pobočka A": {
-        "Indická": ["Cibuľové bhaji", "Indické kurča", "Indický dhal"],
-        "Japonská": ["Hubové teriyaki", "Wakame šalát", "Sushu maki s ovocím", "Udon rezance"],
-        "Čínska": ["Čínske rezance", "Bravčová pečeň čchao", "Kung pao kuracie prsia"],
+        "Indická": {"Cibuľové bhaji": 15, "Indické kurča": 12, "Indický dhal": 14},
+        "Japonská": {"Hubové teriyaki": 8, "Wakame šalát": 10, "Udon rezance": 7},
+        "Čínska": {"Čínske rezance": 6, "Bravčová pečeň čchao": 14, "Kung pao kuracie prsia": 12},
     },
     "Pobočka B": {
-        "Talianská": ["Margarita pizza", "Talianska frittata", "Cestoviny s mozzarellou"],
-        "Grécka": ["Paradojkové placky", "Grécke tzatziky", "Grécky šalát"],
+        "Talianská": {"Margarita pizza": 6, "Talianska frittata": 10, "Cestoviny s mozzarellou": 7},
+        "Grécka": {"Paradojkové placky": 5, "Grécke tzatziky": 6, "Grécky šalát": 7},
     },
     "Pobočka C": {
-        "Francúzska": ["Zaúdené ratatouille", "Hovädzie po burgundsky", "Clafoutis s čučoriadkami"],
-        "Španielska": ["Escalivada s hnedou ryžou", "Paella s morskými plodmi", "Ajo Blanco"]
+        "Francúzska": {"Zaúdené ratatouille": 12, "Hovädzie po burgundsky": 15, "Clafoutis s čučoriadkami": 14},
+        "Španielska": {"Escalivada s hnedou ryžou": 10, "Paella s morskými plodmi": 16, "Ajo Blanco": 12}
     }
 }
 
@@ -33,8 +33,10 @@ function updateFoodOptions() {
     cuisineSelect.onchange = function() {
         foodSelect.length = 1;
 
-        for (const food of foodOptions[branchSelect.value][this.value])
-            foodSelect.options[foodSelect.length] = new Option(food, food);
+        let currentCuisine = foodOptions[branchSelect.value][this.value];
+        for (const food in currentCuisine) {
+            foodSelect.options[foodSelect.length] = new Option(food, currentCuisine[food]);
+        }
     }
 }
 
@@ -107,8 +109,156 @@ function toggleHiddenActiveSection(toggleId, sectionId) {
         sectionElm.classList.remove("active");
 }
 
+function highlightRequired(reqElm) {
+    let error = document.getElementById(reqElm.id + "-error");
+
+    if (reqElm.value === "") {
+        reqElm.style.borderColor = "red";
+        error.textContent = "Toto pole je povinné."
+        error.style.display = "block";
+    }
+    else {
+        reqElm.style.borderColor = "";
+        error.style.display = "none";
+    }
+}
+
+function getGenderValue() {
+    let genderRadios = document.getElementsByName("gender");
+
+    for (const gender of genderRadios) {
+        if (gender.checked) {
+            if (gender.id == "gender-other-radio")
+                return document.getElementById("gender-other-text").value;
+            else
+                return gender.value;
+        }
+    }
+}
+
+function getAllergyValues() {
+    let allergyValues = "";
+    let allergyCheckboxes = document.querySelectorAll("input[type=checkbox]:checked");
+
+    for (let i = 0; i < allergyCheckboxes.length; i++) {
+        if (allergyCheckboxes[i].id == "allergy-other-checkbox") {
+            allergyValues += document.getElementById("allergy-other-text").value;
+        }
+        else
+            allergyValues += allergyCheckboxes[i].value;
+        
+        if (i != allergyCheckboxes.length - 1)
+            allergyValues += ", ";
+    }
+    return allergyValues;
+}
+
+function getPickupChecked() {
+    let pickupRadios = document.getElementsByName("pickup");
+
+    for (const pickup of pickupRadios) {
+        if (pickup.checked) {
+            return pickup;
+        }
+    }
+}
+
+function getPaymentChecked() {
+    let paymentRadios = document.getElementsByName("payment");
+
+    for (const payment of paymentRadios) {
+        if (payment.checked) {
+            return payment;
+        }
+    }
+}
+
+function createModalSummary() {
+    let modalBackground = document.getElementById("modal-summary");
+    modalBackground.classList.add("modal-background");
+
+    let modalContent = document.createElement("div");
+    modalContent.classList.add("modal-content");
+    modalBackground.appendChild(modalContent);
+
+    let name = document.createElement("p");
+    name.textContent = "Meno: " + document.getElementById("name").value;
+    modalContent.appendChild(name);
+
+    let surname = document.createElement("p");
+    surname.textContent = "Priezvisko: " + document.getElementById("surname").value;
+    modalContent.appendChild(surname);
+
+    let gender = document.createElement("p");
+    gender.textContent = "Pohlavie: " + getGenderValue();
+    modalContent.appendChild(gender);
+
+    let birthDate = document.createElement("p");
+    gender.textContent = "Dátum narodenia: " + document.getElementById("birthday").value;
+    modalContent.appendChild(birthDate);
+
+    let age = document.createElement("p");
+    age.textContent = "Vek: " + document.getElementById("age").value;
+    modalContent.appendChild(age);
+
+    let email = document.createElement("p");
+    email.textContent = "Email: " + document.getElementById("email").value;
+    modalContent.appendChild(email);
+
+    let tel = document.createElement("p");
+    tel.textContent = "Tel.č.: " + document.getElementById("tel").value;
+    modalContent.appendChild(tel);
+
+    let food = document.createElement("p");
+    const foodSelect = document.getElementById("food");
+    food.textContent = "Vybrané jedlo: " + foodSelect.options[foodSelect.selectedIndex].text;
+    modalContent.appendChild(food);
+
+    let allergies = document.createElement("p");
+    allergies.textContent = "Uvedené alergie: " + getAllergyValues();
+    modalContent.appendChild(allergies);
+
+    let note = document.createElement("p");
+    note.textContent = "Poznámka k objednávke: " + document.getElementById("note").value;
+    modalContent.appendChild(note);
+
+    let pickup = document.createElement("p");
+    pickup.textContent = "Spôsob dodania: " + getPickupChecked().value;
+    modalContent.appendChild(pickup);
+
+    if (getPickupChecked().id == "pickup-delivery") {
+        let address = document.createElement("p");
+        address.textContent = "Ulica: " + document.getElementById("delivery-address").value;
+        modalContent.appendChild(address);
+
+        let city = document.createElement("p");
+        city.textContent = "Mesto: " + document.getElementById("delivery-city").value;
+        modalContent.appendChild(city);
+
+        let postal = document.createElement("p");
+        postal.textContent = "PSČ: " + document.getElementById("delivery-postal").value;
+        modalContent.appendChild(postal);
+    }
+
+    let payment = document.createElement("p");
+    payment.textContent = "Spôsob platby: " + getPaymentChecked().value;
+    modalContent.appendChild(payment);
+
+    let price = document.createElement("p");
+    price.textContent = "Finálna suma: " + foodSelect.value;
+    modalContent.appendChild(price);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     updateFoodOptions();
+});
+
+const reqElms = document.querySelectorAll("input[required]");
+reqElms.forEach(elm => {
+    highlightRequired(elm);
+    elm.addEventListener("focusout", function() {
+        highlightRequired(elm);
+    });
 });
 
 const genderRadioButtons = document.querySelectorAll("input[name='gender']");

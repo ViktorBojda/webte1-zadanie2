@@ -12,27 +12,29 @@
         <h1>Sieť reštaurácií Bojda</h1>
     </header>
     <form action="" class="page-content grid-double-column">
-        <div class="column-left">
+        <div class="column">
             <section>
                 <h2>Osobné údaje</h2>
                 <div class="flex">
                     <div class="flex-fill">
                         <label for="name">Meno</label><br>
-                        <input class="input-width" type="text" name="name" id="name" placeholder="Jožko" required>
+                        <input class="double-input-width" type="text" name="name" id="name" placeholder="Jožko" required><br>
+                        <label for="name" class="error" id="name-error"></label>
                     </div>
                     <div class="flex-fill">
                         <label for="surname">Priezvisko</label><br>
-                        <input class="input-width" type="text" name="surname" id="surname" placeholder="Mrkvička" required>
+                        <input class="double-input-width" type="text" name="surname" id="surname" placeholder="Mrkvička" required>
+                        <label for="surname" class="error" id="surname-error"></label>
                     </div>
                 </div>
 
                 <fieldset>
                     <legend>Pohlavie</legend>
 
-                    <input type="radio" name="gender" id="gender-man" value="man" checked required>
+                    <input type="radio" name="gender" id="gender-man" value="Muž" checked required>
                     <label for="gender-man">Muž</label><br>
 
-                    <input type="radio" name="gender" id="gender-woman" value="woman">
+                    <input type="radio" name="gender" id="gender-woman" value="Žena">
                     <label for="gender-woman">Žena</label><br>
 
                     <input type="radio" name="gender" id="gender-other-radio">
@@ -43,22 +45,24 @@
                 <div class="flex">
                     <div class="flex-fill">
                         <label for="birthday">Dátum narodenia</label><br>
-                        <input class="input-width" type="date" name="birthday" id="birthday" required>
+                        <input class="double-input-width" type="date" name="birthday" id="birthday" required>
+                        <label for="birthday" class="error" id="birthday-error"></label>
                     </div>
                     <div class="flex-fill">
                         <label for="age">Vek</label><br>
-                        <input class="input-width" type="number" name="age" id="age" required>
+                        <input class="double-input-width" type="number" name="age" id="age" required>
+                        <label for="age" class="error" id="age-error"></label>
                     </div>
                 </div>
 
                 <div class="flex">
                     <div class="flex-fill">
                         <label for="email">Emailová adresa</label><br>
-                        <input class="input-width" type="email" name="email" id="email" placeholder="jozko.mrkvicka@email.com">
+                        <input class="double-input-width" type="email" name="email" id="email" placeholder="jozko.mrkvicka@email.com">
                     </div>
                     <div class="flex-fill">
                         <label for="tel">Telefónne číslo</label><br>
-                        <input class="input-width" type="tel" name="tel" id="tel" placeholder="+123456789">
+                        <input class="double-input-width" type="tel" name="tel" id="tel" placeholder="+123456789">
                     </div>
                 </div>
             </section>
@@ -71,19 +75,19 @@
                     <div class="flex">
                         <div class="flex-fill">
                             <label for="branch">Pobočka</label><br>
-                            <select class="input-width" name="branch" id="branch">
+                            <select class="double-input-width" name="branch" id="branch">
                                 <option value="">-- Zvoľ si pobočku --</option>
                             </select>
                         </div>
                         <div class="flex-fill">
                             <label for="cuisine">Typ kuchyne</label><br>
-                            <select class="input-width" name="cuisine" id="cuisine">
+                            <select class="double-input-width" name="cuisine" id="cuisine">
                                 <option value="">-- Zvoľ si typ kuchyne --</option>
                             </select>
                         </div>
                         <div class="flex-fill">
                             <label for="food">Jedlo</label><br>
-                            <select class="input-width" name="food" id="food">
+                            <select class="double-input-width" name="food" id="food">
                                 <option value="">-- Zvoľ si jedlo --</option>
                             </select>
                         </div>
@@ -92,75 +96,100 @@
                 <fieldset>
                     <legend>Potravinové alergie</legend>
 
-                    <input type="checkbox" name="milk" id="milk">
+                    <input type="checkbox" name="milk" id="milk" value="Mlieko">
                     <label for="milk">Mlieko</label><br>
 
-                    <input type="checkbox" name="egg" id="egg">
+                    <input type="checkbox" name="egg" id="egg" value="Vajcia">
                     <label for="egg">Vajcia</label><br>
 
-                    <input type="checkbox" name="fish" id="fish">
+                    <input type="checkbox" name="fish" id="fish" value="Ryby">
                     <label for="fish">Ryby</label><br>
 
-                    <input type="checkbox" name="soy" id="soy">
+                    <input type="checkbox" name="soy" id="soy" value="Sója">
                     <label for="soy">Sója</label><br>
 
                     <input type="checkbox" name="allergy-other" id="allergy-other-checkbox">
                     <label for="allergy-other-checkbox">Iné</label>
                     <input type="text" name="allergy-other-text" id="allergy-other-text">
                 </fieldset>
+
+                <label for="note">Poznámka k objednávke</label><br>
+                <textarea class="single-input-width" name="note" id="note" cols="30" rows="5"></textarea>
             </section>
         </div>
-        <div>
+        <div class="column">
             <section>
                 <h2>Spôsob vyzdvihnutia a platby</h2>
 
                 <fieldset>
                     <legend>Zvoľte si spôsob vyzdvihnutia</legend>
 
-                    <input type="radio" name="pickup" id="pickup-in-person" checked required>
+                    <input type="radio" name="pickup" id="pickup-in-person" value="Osobne" checked required>
                     <label for="pickup-in-person">Osobne</label><br>
 
-                    <input type="radio" name="pickup" id="pickup-delivery">
+                    <input type="radio" name="pickup" id="pickup-delivery" value="Donáška">
                     <label for="pickup-delivery">Donáška</label>
                 </fieldset>
                 
                 <section id="delivery-section" class="hidden">
                     <h3>Dodacia adresa</h3>
 
-                    <label for="delivery-address">Ulica</label>
-                    <input type="text" name="delivery-address" id="delivery-address"><br>
+                    <div class="margin-bottom">
+                        <label for="delivery-address">Ulica, p.č.</label><br>
+                        <input class="single-input-width" type="text" name="delivery-address" id="delivery-address">
+                    </div>
 
-                    <label for="delivery-city">Mesto</label>
-                    <input type="text" name="delivery-city" id="delivery-city"><br>
-
-                    <label for="delivery-postal">PSČ</label>
-                    <input type="text" name="delivery-postal" id="delivery-postal">
+                    <div class="flex">
+                        <div class="flex-fill">
+                            <label for="delivery-city">Mesto</label><br>
+                            <input class="double-input-width" type="text" name="delivery-city" id="delivery-city">
+                        </div>
+                        <div class="flex-fill">
+                            <label for="delivery-postal">PSČ</label><br>
+                            <input class="double-input-width" type="text" name="delivery-postal" id="delivery-postal">
+                        </div>
+                    </div>
                 </section>
 
                 <fieldset>
                     <legend>Zvoľte si spôsob platby</legend>
 
-                    <input type="radio" name="payment" id="payment-cash" checked required>
+                    <input type="radio" name="payment" id="payment-cash" value="Hotovosť" checked required>
                     <label for="payment-cash">Hotovosť</label><br>
 
-                    <input type="radio" name="payment" id="payment-card">
+                    <input type="radio" name="payment" id="payment-card" value="Platba kartou">
                     <label for="payment-card">Platba kartou</label>
                 </fieldset>
 
                 <section id="card-section" class="hidden">
                     <h3>Informácie o karte</h3>
 
-                    <label for="card-number">Číslo karty</label>
-                    <input type="text" name="card-number" id="card-number"><br>
+                    <div class="flex">
+                        <div class="flex-fill">
+                            <label for="card-name">Meno na karte</label><br>
+                            <input class="double-input-width" type="text" name="card-name" id="card-name">
+                        </div>
+                        <div class="flex-fill">
+                            <label for="card-number">Číslo karty</label><br>
+                            <input class="double-input-width" type="tel" inputmode="numeric" name="card-number" id="card-number">
+                        </div>
+                    </div>
 
-                    <label for="card-expiration">Dátum expirácie</label>
-                    <input type="text" name="card-expiration" id="card-expiration">
-
-                    <label for="card-security">CVV</label>
-                    <input type="text" name="card-security" id="card-security">
+                    <div class="flex">
+                        <div class="flex-fill">
+                            <label for="card-expiration">Dátum expirácie</label><br>
+                            <input class="double-input-width" type="text" name="card-expiration" id="card-expiration">
+                        </div>
+                        <div class="flex-fill">
+                            <label for="card-security">CVV</label><br>
+                            <input class="double-input-width" type="number" name="card-security" id="card-security">
+                        </div>
+                    </div>
                 </section>
+                <input class="flex" type="button" onclick="createModalSummary()" value="Prejsť na zhodnotenie">
             </section>
         </div>
+        <div id="modal-summary"></div>
     </form>
     <script defer src="js/index.js"></script>
 </body>

@@ -20,14 +20,28 @@ h2 {
     margin-bottom: 2%;
 }
 
+input {
+    line-height: 1.6em;
+}
+
+input[type=button] {
+    line-height: 2.6em;
+    margin: 4% auto;
+}
+
 select {
     text-align: center;
+    height: 2em;
 }
 
 fieldset {
     border: 0;
     margin: 0 0 1% 0;
     padding: 0;
+}
+
+textarea {
+    resize: none;
 }
 
 .page-content {
@@ -43,8 +57,8 @@ fieldset {
     grid-template-columns: 1fr 1fr;
 }
 
-.column-left {
-    margin: 0 0 2% 2%;
+.column {
+    margin: 0 2% 2% 2%;
 }
 
 .hidden {
@@ -70,12 +84,43 @@ fieldset {
     flex: 1;
 }
 
-.input-width {
+.double-input-width {
     width: 94%;
 }
 
-.inline {
-    display: inline-block;
+.single-input-width {
+    width: 97%;
+}
+
+.error {
+    display: none;
+    color: red;
+    font-size: small;
+}
+
+.margin-bottom {
+    margin-bottom: 1%;
+}
+
+.modal-background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    max-width: 75%;
+    max-height: 75%;
+    overflow: auto;
+    margin: 10% auto;
+    padding: 1%;
+    background-clip: padding-box;
+    background-color: white;
+    box-shadow: 10px 5px 5px gray;
 }
 
 #gender-other-text, #allergy-other-text {
