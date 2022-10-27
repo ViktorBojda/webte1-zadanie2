@@ -165,6 +165,54 @@ function validateAge() {
     validateButton();
 }
 
+function validateText(textInputId) {
+    let textInput = document.getElementById(textInputId);
+    let error = document.getElementById(textInputId + "-error");
+    let validRegex = /^[a-zA-Z]+$/;
+
+    if (textInput.value == "")
+        return;
+
+    if (textInput.value.match(validRegex)) {
+        textInput.style.backgroundColor = "rgb(121, 232, 121)";
+        error.textContent = "";
+        error.style.display = "none";
+        requiredElements[textInput.id] = true;
+    }
+    else {
+        textInput.style.backgroundColor = "rgb(234, 118, 118)";
+        error.style.display = "block";
+        error.textContent = "Nesprávne zadaný formát."
+        requiredElements[textInput.id] = false;
+    }
+
+    validateButton();
+}
+
+function validatePostal() {
+    let postal = document.getElementById("delivery-postal");
+    let error = document.getElementById(postal.id + "-error");
+    let validRegex = /\d{3}\s\d{2}/;
+
+    if (postal.value == "")
+        return;
+
+    if (postal.value.match(validRegex)) {
+        postal.style.backgroundColor = "rgb(121, 232, 121)";
+        error.textContent = "";
+        error.style.display = "none";
+        requiredElements[postal.id] = true;
+    }
+    else {
+        postal.style.backgroundColor = "rgb(234, 118, 118)";
+        error.style.display = "block";
+        error.textContent = "Nesprávne zadaný formát."
+        requiredElements[postal.id] = false;
+    }
+
+    validateButton();
+}
+
 
 function validateEmail() {
     let emailElm = document.getElementById("email");
@@ -228,18 +276,6 @@ function toggleHiddenTextInput() {
 }
 
 
-function toggleHiddenActiveSection(toggleId, sectionId) {
-    let toggleElm = document.getElementById(toggleId);
-    let sectionElm = document.getElementById(sectionId);
-
-    if (toggleElm.checked)
-        sectionElm.classList.add("active");
-
-    else
-        sectionElm.classList.remove("active");
-}
-
-
 function highlightRequired(reqElm) {
     let error = document.getElementById(reqElm.id + "-error");
 
@@ -292,7 +328,6 @@ function highlightMissingFood() {
     validateButton();
 }
 
-
 function getGenderValue() {
     let genderRadios = document.getElementsByName("gender");
 
@@ -332,17 +367,6 @@ function getPickupChecked() {
     }
 }
 
-
-function getPaymentChecked() {
-    let paymentRadios = document.getElementsByName("payment");
-
-    for (const payment of paymentRadios) {
-        if (payment.checked) {
-            return payment;
-        }
-    }
-}
-
 function showHiddenTextField() {
     let hiddenTextField = document.getElementById("hidden-text-field");
     hiddenTextField.style.visibility = "visible";
@@ -365,6 +389,7 @@ function requireDelivery(bool) {
         deliveryCity.required = true;
         deliveryCity.addEventListener("input", function() {
             highlightRequired(deliveryCity);
+            validateText(deliveryCity.id);
         });
         requiredElements[deliveryCity.id] = false;
         highlightRequired(deliveryCity);
@@ -372,6 +397,7 @@ function requireDelivery(bool) {
         deliveryPostal.required = true;
         deliveryPostal.addEventListener("input", function() {
             highlightRequired(deliveryPostal);
+            validatePostal();
         });
         requiredElements[deliveryPostal.id] = false;
         highlightRequired(deliveryPostal);
@@ -383,10 +409,12 @@ function requireDelivery(bool) {
 
         deliveryCity.required = false;
         deliveryCity.removeEventListener("input", highlightRequired);
+        deliveryCity.removeEventListener("input", validateText)
         delete requiredElements[deliveryCity.id];
 
         deliveryPostal.required = false;
         deliveryPostal.removeEventListener("input", highlightRequired);
+        deliveryPostal.removeEventListener("input", validatePostal);
         delete requiredElements[deliveryPostal.id];
     }
 }
@@ -458,13 +486,6 @@ function createModalSummary() {
         modalContent.appendChild(allergiesText);
     }
 
-    let noteValue = document.getElementById("note").value;
-    if (noteValue != "") {
-        let noteText = document.createElement("p");
-        noteText.textContent = "Poznámka k objednávke: " + noteValue;
-        modalContent.appendChild(noteText);
-    }
-
     let pickup = document.createElement("p");
     pickup.textContent = "Spôsob dodania: " + getPickupChecked().value;
     modalContent.appendChild(pickup);
@@ -481,11 +502,14 @@ function createModalSummary() {
         let postal = document.createElement("p");
         postal.textContent = "PSČ: " + document.getElementById("delivery-postal").value;
         modalContent.appendChild(postal);
-    }
 
-    let payment = document.createElement("p");
-    payment.textContent = "Spôsob platby: " + getPaymentChecked().value;
-    modalContent.appendChild(payment);
+        let noteValue = document.getElementById("note").value;
+        if (noteValue != "") {
+            let noteText = document.createElement("p");
+            noteText.textContent = "Poznámka pre kuriéra: " + noteValue;
+            modalContent.appendChild(noteText);
+        }
+    }
 
     let price = document.createElement("p");
     price.textContent = "Finálna suma: " + foodSelect.value + " €";
@@ -513,11 +537,13 @@ reqInputs.forEach(input => {
 let nameElm = document.getElementById("name");
 nameElm.addEventListener("input", function() {
     validateLetterCount(nameElm.id);
+    validateText(nameElm.id);
 });
 
 let surnameElm = document.getElementById("surname");
 surnameElm.addEventListener("input", function() {
     validateLetterCount(surnameElm.id);
+    validateText(surnameElm.id);
 });
 
 const genderRadioButtons = document.querySelectorAll("input[name='gender']");
@@ -535,21 +561,12 @@ document.getElementById("tel").addEventListener("input", validateTel);
 
 document.getElementById("allergy-other-checkbox").addEventListener("click", toggleHiddenTextInput);
 
-document.getElementById("food").addEventListener("input", highlightMissingFood);
-document.getElementById("cuisine").addEventListener("input", highlightMissingFood);
-document.getElementById("branch").addEventListener("input", highlightMissingFood);
+document.getElementById("food-select").addEventListener("change", highlightMissingFood);
 
 const pickupRadios = document.querySelectorAll("input[name='pickup']");
 pickupRadios.forEach(radio => {
     radio.addEventListener("click", togglePickup);
 });
-
-const paymentRadioButtons = document.querySelectorAll("input[name='payment']");
-paymentRadioButtons.forEach(radio => {
-    radio.addEventListener("click", function() {
-        toggleHiddenActiveSection("payment-card", "card-section");
-    }
-)});
 
 const modalBackground = document.getElementById("modal-summary");
 window.onclick = function(event) {

@@ -17,12 +17,12 @@
 
         <input type="hidden" name="from" value="xbojda@stuba.sk">
         <input type="hidden" name="sender" value="Viktor">
-        <input type="hidden" name="to" value="viktorbojda17@gmail.com">
+        <input type="hidden" name="to" value="feistu02@gmail.com">
         <input type="hidden" name="subject" value="Viktor">
         <input type="hidden" name="redirectOk" value="https://webte1.fei.stuba.sk/~xbojda/webte1-zadanie2/ok.html">
         <input type="hidden" name="redirectFalse" value="https://webte1.fei.stuba.sk/~xbojda/webte1-zadanie2/false.html">
 
-        <div class="column">
+        <div class="column border-right">
             <section>
                 <h2>Osobné údaje</h2>
                 <div class="flex">
@@ -76,11 +76,11 @@
             </section>
             
             <section>
-                <h2>Detaily objednávky</h2>
+                <h2 class="border-top margin-padding-top single-input-width">Detaily objednávky</h2>
                 <fieldset>
                     <legend>Výber jedla</legend>
                     
-                    <div class="flex">
+                    <div class="flex" id="food-select">
                         <div class="flex-fill">
                             <label for="branch">Pobočka</label><br>
                             <select class="double-input-width" name="branch" id="branch">
@@ -121,14 +121,11 @@
                     <label for="allergy-other-checkbox">Iné</label>
                     <input type="text" name="allergy-other-text" id="allergy-other-text">
                 </fieldset>
-
-                <label for="note">Poznámka k objednávke</label><br>
-                <textarea class="single-input-width" name="note" id="note" cols="30" rows="5"></textarea>
             </section>
         </div>
         <div class="column">
             <section>
-                <h2>Spôsob vyzdvihnutia a platby</h2>
+                <h2>Spôsob vyzdvihnutia</h2>
 
                 <fieldset>
                     <legend>Zvoľte si spôsob vyzdvihnutia</legend>
@@ -157,47 +154,15 @@
                         </div>
                         <div class="flex-fill">
                             <label for="delivery-postal">PSČ</label><br>
-                            <input class="double-input-width" type="tel" name="delivery-postal" id="delivery-postal" placeholder="420 69">
+                            <input class="double-input-width" type="tel" name="delivery-postal" id="delivery-postal" placeholder="420 69" maxlength="6">
                             <label for="delivery-postal" class="error" id="delivery-postal-error"></label>
                         </div>
                     </div>
+
+                    <label for="note">Poznámka pre kuriéra</label><br>
+                    <textarea class="single-input-width" name="note" id="note" cols="30" rows="5"></textarea>
                 </section>
 
-                <fieldset>
-                    <legend>Zvoľte si spôsob platby</legend>
-
-                    <input type="radio" name="payment" id="payment-cash" value="Hotovosť" checked>
-                    <label for="payment-cash">Hotovosť</label><br>
-
-                    <input type="radio" name="payment" id="payment-card" value="Platba kartou">
-                    <label for="payment-card">Platba kartou</label>
-                </fieldset>
-
-                <section id="card-section" class="hidden">
-                    <h3>Informácie o karte</h3>
-
-                    <div class="flex">
-                        <div class="flex-fill">
-                            <label for="card-name">Meno na karte</label><br>
-                            <input class="double-input-width" type="text" name="card-name" id="card-name" placeholder="Jožko Mrkvička">
-                        </div>
-                        <div class="flex-fill">
-                            <label for="card-number">Číslo karty</label><br>
-                            <input class="double-input-width" type="tel" inputmode="numeric" name="card-number" id="card-number" placeholder="XXXX XXXX XXXX XXXX">
-                        </div>
-                    </div>
-
-                    <div class="flex">
-                        <div class="flex-fill">
-                            <label for="card-expiration">Dátum expirácie</label><br>
-                            <input class="double-input-width" type="text" name="card-expiration" id="card-expiration" placeholder="XX/XX" autocomplete="cc-exp" maxlength="5">
-                        </div>
-                        <div class="flex-fill">
-                            <label for="card-security">CVV</label><br>
-                            <input class="double-input-width" type="text" name="card-security" id="card-security" placeholder="XXX" maxlength="3">
-                        </div>
-                    </div>
-                </section>
                 <input class="flex" disabled type="button" onclick="createModalSummary()" id="checkout-button" value="Prejsť na zhodnotenie">
 
                 <div>
