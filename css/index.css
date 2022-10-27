@@ -6,7 +6,6 @@ body {
 h1 {
     text-align: center;
     letter-spacing: 1rem;
-    padding: 2% auto;
 }
 
 h1 strong {
@@ -51,9 +50,22 @@ textarea {
     box-shadow: 10px 5px 5px gray;
 }
 
+.footer {
+    background-color: rgb(45, 57, 83);
+    color: white;
+}
+
 .grid-double-column {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.grid-modal {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(8, auto);
 }
 
 .column {
@@ -129,7 +141,7 @@ textarea {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal-window {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
@@ -141,6 +153,12 @@ textarea {
     background-clip: padding-box;
     background-color: white;
     box-shadow: 10px 5px 5px gray;
+}
+
+.modal-window h2 {
+    text-align: center;
+    border-bottom: solid 1px black;
+    padding-bottom: 1%;
 }
 
 #allergy-other-text, #hidden-text-field {

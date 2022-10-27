@@ -12,7 +12,7 @@ const foodOptions = {
         "Francúzska": {"Zaúdené ratatouille": 12, "Hovädzie po burgundsky": 15, "Clafoutis s čučoriadkami": 14},
         "Španielska": {"Escalivada s hnedou ryžou": 10, "Paella s morskými plodmi": 16, "Ajo Blanco": 12}
     }
-}
+};
 
 
 let requiredElements = {
@@ -23,7 +23,7 @@ let requiredElements = {
     "email": false,
     "tel": false,
     "food": false
-}
+};
 
 
 function updateFoodOptions() {
@@ -40,7 +40,7 @@ function updateFoodOptions() {
 
         for (const cuisine in foodOptions[this.value])
             cuisineSelect.options[cuisineSelect.length] = new Option(cuisine, cuisine);
-    }
+    };
 
     cuisineSelect.onchange = function() {
         foodSelect.length = 1;
@@ -49,7 +49,7 @@ function updateFoodOptions() {
         for (const food in currentCuisine) {
             foodSelect.options[foodSelect.length] = new Option(food, currentCuisine[food]);
         }
-    }
+    };
 }
 
 function validateButton() {
@@ -67,7 +67,7 @@ function validateButton() {
 
 
 function validateLetterCount(elmId) {
-    let elm = document.getElementById(elmId)
+    let elm = document.getElementById(elmId);
     let error = document.getElementById(elmId + "-error");
     let label = document.getElementById(elmId + "-letter-count");
     let maxCount = 20;
@@ -80,7 +80,7 @@ function validateLetterCount(elmId) {
     if (currentCount > maxCount) {
         elm.style.backgroundColor = "rgb(234, 118, 118)";
         error.style.display = "block";
-        error.textContent = "Presiahol si maximálny počet znakov."
+        error.textContent = "Presiahol si maximálny počet znakov.";
         requiredElements[elm.id] = false;
     }
     else {
@@ -120,13 +120,13 @@ function validateBirthday() {
     if (calcAge < 15) {
         birthdayError.style.display = "block";
         birthdayElm.style.backgroundColor = "rgb(234, 118, 118)";
-        birthdayError.textContent = "Pre vytvorenie objednávky musíš mať aspoň 15 rokov."
+        birthdayError.textContent = "Pre vytvorenie objednávky musíš mať aspoň 15 rokov.";
         requiredElements[birthdayElm.id] = false;
     }
     else if (calcAge > 120) {
         birthdayError.style.display = "block";
         birthdayElm.style.backgroundColor = "rgb(234, 118, 118)";
-        birthdayError.textContent = "Zadaj platný dátum narodenia."
+        birthdayError.textContent = "Zadaj platný dátum narodenia.";
         requiredElements[birthdayElm.id] = false;
     }
     else {
@@ -151,7 +151,7 @@ function validateAge() {
     if (ageElm.value != calcAge) {
         ageError.style.display = "block";
         ageElm.style.backgroundColor = "rgb(234, 118, 118)";
-        ageError.textContent = "Vek sa nezhoduje so zadaným dátumom narodenia."
+        ageError.textContent = "Vek sa nezhoduje so zadaným dátumom narodenia.";
         requiredElements[ageElm.id] = false;
     }
     else {
@@ -168,7 +168,7 @@ function validateAge() {
 function validateText(textInputId) {
     let textInput = document.getElementById(textInputId);
     let error = document.getElementById(textInputId + "-error");
-    let validRegex = /^[a-zA-Z]+$/;
+    let validRegex = /^[a-zA-Z\u0080-\uFFFF]+$/;
 
     if (textInput.value == "")
         return;
@@ -182,7 +182,7 @@ function validateText(textInputId) {
     else {
         textInput.style.backgroundColor = "rgb(234, 118, 118)";
         error.style.display = "block";
-        error.textContent = "Nesprávne zadaný formát."
+        error.textContent = "Nesprávne zadaný formát.";
         requiredElements[textInput.id] = false;
     }
 
@@ -206,7 +206,7 @@ function validatePostal() {
     else {
         postal.style.backgroundColor = "rgb(234, 118, 118)";
         error.style.display = "block";
-        error.textContent = "Nesprávne zadaný formát."
+        error.textContent = "Nesprávne zadaný formát.";
         requiredElements[postal.id] = false;
     }
 
@@ -231,7 +231,7 @@ function validateEmail() {
     else {
         emailElm.style.backgroundColor = "rgb(234, 118, 118)";
         emailError.style.display = "block";
-        emailError.textContent = "Nesprávne zadaný formát."
+        emailError.textContent = "Nesprávne zadaný formát.";
         requiredElements[emailElm.id] = false;
     }
 
@@ -312,7 +312,7 @@ function highlightMissingFood() {
         foodSel.style.backgroundColor = "rgb(234, 118, 118)";
         error.textContent = "Tieto polia sú povinné.";
         error.style.display = "block";
-        requiredElements[foodSel.id] = false
+        requiredElements[foodSel.id] = false;
     }
     else {
         branchSel.style.borderColor = "";
@@ -322,7 +322,7 @@ function highlightMissingFood() {
         foodSel.style.borderColor = "";
         foodSel.style.backgroundColor = "rgb(121, 232, 121)";
         error.style.display = "none";
-        requiredElements[foodSel.id] = true
+        requiredElements[foodSel.id] = true;
     }
 
     validateButton();
@@ -409,7 +409,7 @@ function requireDelivery(bool) {
 
         deliveryCity.required = false;
         deliveryCity.removeEventListener("input", highlightRequired);
-        deliveryCity.removeEventListener("input", validateText)
+        deliveryCity.removeEventListener("input", validateText);
         delete requiredElements[deliveryCity.id];
 
         deliveryPostal.required = false;
@@ -440,11 +440,18 @@ function createModalSummary() {
     let modalBackground = document.getElementById("modal-summary");
     modalBackground.classList.add("modal-background");
 
+    let modalWindow = document.createElement("div");
+    modalWindow.id = "modal-window";
+    modalWindow.classList.add("modal-window");
+    modalBackground.appendChild(modalWindow);
+
+    let titleText = document.createElement("h2");
+    titleText.textContent = "Súhrn zadaných informácií";
+    modalWindow.appendChild(titleText);
+
     let modalContent = document.createElement("div");
-    modalContent.id = "modal-content";
-    modalContent.classList.add("modal-content");
-    modalContent.classList.add("grid-double-column");
-    modalBackground.appendChild(modalContent);
+    modalContent.classList.add("grid-modal");
+    modalWindow.appendChild(modalContent);
 
     let nameText = document.createElement("p");
     nameText.textContent = "Meno: " + document.getElementById("name").value;
@@ -572,6 +579,6 @@ const modalBackground = document.getElementById("modal-summary");
 window.onclick = function(event) {
     if (event.target == modalBackground) {
         modalBackground.classList.remove("modal-background");
-        document.getElementById("modal-content").remove();
+        document.getElementById("modal-window").remove();
     }
-}
+};
